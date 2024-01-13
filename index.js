@@ -18,19 +18,19 @@ app.post('/upload/:type', upload.single('file'), handleFileUpload);
 function handleFileUpload(req, res) {
     try {
         const fileBuffer = req.file.buffer;
-        // const fileType = req.params.type;
-        console.log(fileBuffer)
+        const fileType = req.file.mimetype
         let statements;
+        console.log(fileBuffer)
+        console.log(fileType)
+        if (fileType === 'text/csv') {
+            statements = readCSV(fileBuffer);
+        } else if (fileType === 'text/xml') {
+            statements = readXML(fileBuffer);
+        } else {
+            return res.status(400).json({ error: 'Invalid file type. Supported types: csv, xml' });
+        }
 
-        // if (fileType === 'text/csv') {
-        //     statements = readCSV(fileBuffer);
-        // } else if (fileType === 'text/xml') {
-        //     statements = readXML(fileBuffer);
-        // } else {
-        //     return res.status(400).json({ error: 'Invalid file type. Supported types: csv, xml' });
-        // }
-
-        validateAndRespond(statements, res);
+        // validateAndRespond(statements, res);
     } catch (error) {
         console.error('Error processing file:', error);
         res.status(500).json({ error: 'Internal server error' });
@@ -41,11 +41,12 @@ function readCSV(fileBuffer) {
     return new Promise((resolve, reject) => {
         const statements = [];
 
-        csv({ headers: true })
+        const stream = csv({ headers: true })
             .on('data', (row) => statements.push(row))
             .on('end', () => resolve(statements))
             .on('error', (error) => reject(error))
-            .write(fileBuffer);
+            stream.write(fileBuffer);
+            stream.end();
     });
 }
 
@@ -57,8 +58,7 @@ function readXML(fileBuffer) {
             if (error) {
                 reject(error);
             } else {
-                const statements = result.records.record;
-                resolve(statements);
+                resolve(result.records.record);
             }
         });
     });
