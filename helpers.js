@@ -6,7 +6,6 @@ async function mapFileToStatements(file) {
     switch (type) {
         case 'text/csv':
             statements = await readCSV(buffer)
-            console.log(statements)
             break;
         case 'text/xml':
             statements = await readXML(buffer);
@@ -25,12 +24,13 @@ function validateCustomerStatements(statements) {
             uniqueTransactions.add(record.reference);
         }
 
-
-        const calculatedEndBalance = Number(record.startBalance) + Number(record.mutation);
-        if (calculatedEndBalance !== record.endBalance) {
+        const calculatedEndBalance = parseFloat(record.startBalance) + parseFloat(record.mutation)
+        const actualEndBalance = parseFloat(record.endBalance).toFixed(2);
+        if (parseFloat(calculatedEndBalance.toFixed(2)) !== parseFloat(actualEndBalance)) {
             failedRecords.push({ reference: record.reference, description: record.description, validation: "Failed mutation" });
         }
     });
+
     return failedRecords;
 }
 

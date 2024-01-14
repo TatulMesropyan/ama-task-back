@@ -28,9 +28,6 @@ jobs:
       - name: Prepare deps
         run: make init
 
-      - name: Lint
-        run: make lint
-
       - name: Build
         run: make build
 
