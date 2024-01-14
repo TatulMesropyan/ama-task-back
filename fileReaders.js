@@ -29,7 +29,7 @@ function readXML(fileBuffer) {
         const parser = new xml2js.Parser({ explicitArray: false, mergeAttrs: true });
         parser.parseString(xmlString, (error, result) => {
             if (error) {
-                reject(error);
+                reject(new Error('Invalid XML format', error.message));
             } else {
                 const statements = result.records.record
                 resolve(statements);
