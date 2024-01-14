@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
-const { mapTypeToDocHandler } = require('./helpers');
+const { mapFileToStatements, validateCustomerStatements } = require('./helpers');
 
 const app = express();
 app.use(cors());
@@ -14,12 +14,15 @@ app.use(express.json());
 
 app.post('/upload', upload.single('file'), handleFileUpload);
 
-function handleFileUpload(req, res) {
+async function handleFileUpload(req, res) {
     try {
-        const fileBuffer = req.file.buffer;
-        const fileType = req.file.mimetype
-        const statements = mapTypeToDocHandler(fileType, fileBuffer)
-        console.log(statements)
+        const file = {
+            type: req.file.mimetype,
+            buffer: req.file.buffer
+        }
+        const statements = await mapFileToStatements(file)
+        const validations = validateCustomerStatements(statements)
+        res.json({validations})
     } catch (error) {
         console.error('Error processing file:', error);
         res.status(500).json({ error: 'Internal server error' });
