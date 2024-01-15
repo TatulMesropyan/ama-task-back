@@ -28,7 +28,7 @@ async function handleFileUpload(req, res) {
         console.error('Error processssing file:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
 
 const server = awsServerlessExpress.createServer(app);
 exports.handler = (event, context) => {
