@@ -2,7 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const awsServerlessExpress = require('aws-serverless-express');
-const { mapFileToStatements, validateCustomerStatements } = require('./helpers');
+const { mapFileToStatements, mapErrorToStatusAndMessage, validateCustomerStatements } = require('./helpers');
+const { validateFile } = require('./validators');
 
 const app = express();
 app.use(cors());
@@ -25,8 +26,8 @@ async function handleFileUpload(req, res) {
         const validations = validateCustomerStatements(statements)
         return res.json({ validations })
     } catch (error) {
-        console.error('Error processssing file:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        const {message, status} = mapErrorToStatusAndMessage(error.message) || {}
+        res.status(status).json({ errorMessage: message });
     }
 }
 
