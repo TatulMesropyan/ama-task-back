@@ -7,12 +7,12 @@ init:
 .PHONY: deploy
 deploy:
 	zip -r main.zip *
-	aws --version
 	aws lambda update-function-code \
 		--function-name ama-backend \
 		--region eu-central-1 \
-		--publish \
-		--zip-file fileb://main.zip 2>&1 | tee aws_lambda_update.log
+		--zip-file fileb://main.zip \
+		--publish
+		
 
 .PHONY: help
 help: ## Displays this help
