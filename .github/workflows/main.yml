@@ -28,9 +28,6 @@ jobs:
       - name: Prepare dependencies
         run: make init
 
-      - name: Zip files
-        run: zip -r main.zip *
-
       - name: Deploy to AWS Lambda
         run: make deploy
         env:

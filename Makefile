@@ -6,10 +6,10 @@ init:
 
 .PHONY: deploy
 deploy:
-	zip -r main.zip *
+	zip -r main.zip * &&
 	aws lambda update-function-code \
 		--function-name ama-backend \
-		--zip-file fileb://main.zip
+		--zip-file ./main.zip
 
 .PHONY: help
 help: ## Displays this help
