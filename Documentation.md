@@ -1,6 +1,20 @@
 # File Processing API
 
-The File Processing API allows users to upload CSV or XML files for validation. The API is hosted at [http://ama-frontend.s3-website.eu-central-1.amazonaws.com/](http://ama-frontend.s3-website.eu-central-1.amazonaws.com/).
+The File Processing API allows users to upload CSV or XML files for validation. The FE is hosted at [http://ama-frontend.s3-website.eu-central-1.amazonaws.com/](http://ama-frontend.s3-website.eu-central-1.amazonaws.com/).
+
+## Technologies Used
+
+### Express.js
+
+The API is built using [Express.js](https://expressjs.com/), a fast, minimalist web framework for Node.js. Express.js simplifies the process of building web applications and APIs.
+
+### AWS Lambda
+
+The application is deployed on [AWS Lambda](https://aws.amazon.com/lambda/), a serverless computing service. AWS Lambda allows running code without provisioning or managing servers, providing a scalable and cost-effective solution. You can access the API through the following link: [AWS Lambda API](https://qaweu2uksazg4d6iu2sbltou7i0ldcvl.lambda-url.eu-central-1.on.aws/)
+
+### GitHub Actions
+
+[GitHub Actions](https://github.com/features/actions) is utilized for CI/CD. The workflow includes steps for dependency installation, deployment, and AWS Lambda update.
 
 ## Endpoints
 
