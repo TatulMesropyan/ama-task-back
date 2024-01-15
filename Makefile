@@ -4,9 +4,12 @@
 init:
 	npm install
 
-.PHONY: build
-build:
-	npm run build
+.PHONY: deploy
+deploy: init
+	zip -r main.zip *
+	aws lambda update-function-code \
+		--function-name ama-backend \
+		--zip-file fileb://main.zip
 
 .PHONY: help
 help: ## Displays this help

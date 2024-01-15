@@ -1,4 +1,4 @@
-name: Back CI
+name: Backend CI
 
 on:
   push:
@@ -25,14 +25,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Prepare deps
+      - name: Prepare dependencies
         run: make init
 
-      - name: Build
-        run: make build
+      - name: Zip files
+        run: zip -r main.zip *
 
-      - name: Deploy
-        run: aws s3 sync build/ s3://ama-frontend --region eu-central-1
+      - name: Deploy to AWS Lambda
+        run: make deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

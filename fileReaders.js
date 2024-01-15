@@ -6,7 +6,6 @@ function readCSV(fileBuffer) {
         const statements = [];
         const stream = csv({ headers: true, skipLines: 1 })
             .on('data', (row) => {
-                
                 const newRow = {
                     reference: row['_0'],
                     accountNumber: row['_1'],

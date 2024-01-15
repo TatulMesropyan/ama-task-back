@@ -1,3 +1,0 @@
-const lambdaHandler = (event, context) => {
-    
-}
