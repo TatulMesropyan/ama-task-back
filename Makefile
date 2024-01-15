@@ -5,7 +5,7 @@ init:
 	npm install
 
 .PHONY: deploy
-deploy: init
+deploy:
 	zip -r main.zip *
 	aws lambda update-function-code \
 		--function-name ama-backend \
