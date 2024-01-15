@@ -1,4 +1,4 @@
-function validateFile(file) {
+async function validateFile(file) {
     if (!file || !file.mimetype || !file.buffer) {
         throw new Error('Invalid file');
     }
