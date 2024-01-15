@@ -1,21 +1,18 @@
-const { readCSV, readXML } = require('./fileReaders')
-
-async function readFile(type, buffer) {
-    switch (type) {
-        case 'text/csv':
-            return await readCSV(buffer);
-        case 'text/xml':
-            return await readXML(buffer);
-        default:
-            throw new Error('Unsupported file type');
-    }
-}
+const {readCSV, readXML} = require('./fileReaders')
 
 async function mapFileToStatements(file) {
-    const { type, buffer } = file || {};
-    return await readFile(type, buffer);
+    const {type, buffer} = file || {}
+    let statements;
+    switch (type) {
+        case 'text/csv':
+            statements = await readCSV(buffer)
+            break;
+        case 'text/xml':
+            statements = await readXML(buffer);
+            break;
+    }
+    return statements;
 }
-
 function validateCustomerStatements(statements) {
     const uniqueTransactions = new Set();
     const failedRecords = [];
@@ -37,4 +34,4 @@ function validateCustomerStatements(statements) {
     return failedRecords;
 }
 
-module.exports = { mapFileToStatements, validateCustomerStatements };
+module.exports = { mapFileToStatements, validateCustomerStatements }

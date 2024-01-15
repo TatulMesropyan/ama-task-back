@@ -3,7 +3,6 @@ const multer = require('multer');
 const cors = require('cors');
 const awsServerlessExpress = require('aws-serverless-express');
 const { mapFileToStatements, validateCustomerStatements } = require('./helpers');
-const { validateFile } = require('./validators');
 
 const app = express();
 app.use(cors());
@@ -17,7 +16,6 @@ app.post('/upload', upload.single('file'), handleFileUpload);
 
 async function handleFileUpload(req, res) {
     try {
-        await validateFile(req.file);
         const file = {
             type: req.file.mimetype,
             buffer: req.file.buffer
@@ -29,7 +27,7 @@ async function handleFileUpload(req, res) {
         console.error('Error processssing file:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
-};
+}
 
 const server = awsServerlessExpress.createServer(app);
 exports.handler = (event, context) => {
