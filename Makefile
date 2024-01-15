@@ -10,6 +10,8 @@ deploy:
 	aws --version
 	aws lambda update-function-code \
 		--function-name ama-backend \
+		--region eu-central-1 \
+		--publish \
 		--zip-file fileb://main.zip 2>&1 | tee aws_lambda_update.log
 
 .PHONY: help
