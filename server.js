@@ -16,6 +16,7 @@ app.post('/upload', upload.single('file'), handleFileUpload);
 
 async function handleFileUpload(req, res) {
     try {
+        validateFile(req.file);
         const file = {
             type: req.file.mimetype,
             buffer: req.file.buffer
