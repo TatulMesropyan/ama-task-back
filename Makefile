@@ -9,7 +9,7 @@ deploy:
 	zip -r main.zip *
 	aws lambda update-function-code \
 		--function-name ama-backend \
-		--zip-file ./main.zip
+		--zip-file fileb://main.zip
 
 .PHONY: help
 help: ## Displays this help
