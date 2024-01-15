@@ -7,7 +7,7 @@ async function readFile(type, buffer) {
         case 'text/xml':
             return await readXML(buffer);
         default:
-            throw new Error('Unsupported file type');
+            throw new Error('unsupportedFileType');
     }
 }
 
@@ -48,4 +48,34 @@ function validateCustomerStatements(statements) {
     return failedRecords;
 }
 
-module.exports = { mapFileToStatements, validateCustomerStatements };
+function mapErrorToStatusAndMessage(err) {
+    switch (err) {
+        case 'invalidFile':
+            return {
+                message: "Invalid file",
+                status: 400
+            };
+        case 'unsupportedFileType':
+            return {
+                message: "Unsupported file type",
+                status: 415
+            };
+        case 'invalidXML':
+            return {
+                message: "Invalid XML format",
+                status: 400
+            };
+        case 'invalidCSV':
+            return {
+                message: "Invalid CSV format",
+                status: 400
+            };
+        default:
+            return {
+                message: "Internal server error",
+                status: 500
+            };
+    }
+}
+
+module.exports = { mapFileToStatements, validateCustomerStatements, mapErrorToStatusAndMessage };

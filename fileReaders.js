@@ -12,25 +12,26 @@ function readCSV(fileBuffer) {
                     description: row['_2'],
                     startBalance: row['_3'],
                     mutation: row['_4'],
-                    endBalance: row['_5']
-                }
-                statements.push(newRow)
+                    endBalance: row['_5'],
+                };
+                statements.push(newRow);
             })
             .on('end', () => resolve(statements))
-            .on('error', (error) => reject(error))
-        stream.write(fileBuffer)
+            .on('error', () => reject(new Error('invalidCSV')));
+        stream.write(fileBuffer);
         stream.end();
     });
 }
+
 function readXML(fileBuffer) {
     return new Promise((resolve, reject) => {
         const xmlString = fileBuffer.toString('utf-8');
         const parser = new xml2js.Parser({ explicitArray: false, mergeAttrs: true });
         parser.parseString(xmlString, (error, result) => {
             if (error) {
-                reject(new Error('Invalid XML format', error.message));
+                reject(new Error('invalidXML'));
             } else {
-                const statements = result.records.record
+                const statements = result.records.record;
                 resolve(statements);
             }
         });
