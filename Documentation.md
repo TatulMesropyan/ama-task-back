@@ -1,6 +1,6 @@
 # File Processing API
 
-The File Processing API allows users to upload CSV or XML files for validation. The FE is hosted at [http://ama-frontend.s3-website.eu-central-1.amazonaws.com/](http://ama-frontend.s3-website.eu-central-1.amazonaws.com/).
+The File Processing API allows users to upload CSV or XML files for validation. The FE is hosted at [http://test-frontend.s3-website.eu-central-1.amazonaws.com/](http://ama-frontend.s3-website.eu-central-1.amazonaws.com/).
 
 ## Technologies Used
 
@@ -27,7 +27,7 @@ The application is deployed on [AWS Lambda](https://aws.amazon.com/lambda/), a s
 
 1. **Upload a File:**
 
-   - Visit [http://ama-frontend.s3-website.eu-central-1.amazonaws.com/](http://ama-frontend.s3-website.eu-central-1.amazonaws.com/) in your web browser.
+   - Visit [http://test-frontend.s3-website.eu-central-1.amazonaws.com/](http://test-frontend.s3-website.eu-central-1.amazonaws.com/) in your web browser.
    - Upload a file using the provided interface.
 
 2. **Response:**
